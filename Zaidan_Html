@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f5f4ee">
+	<meta name="description" content="Belajar bahasa Jepang dengan cara yang terasa dekat. Mulai dari hiragana sampai percakapan sehari-hari bersama Nihongo.">
+	<title>Nihongo — Bahasa baru, dunia baru</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--paper: #f5f4ee;
+			--ink: #193d35;
+			--muted: #69766f;
+			--coral: #ef755e;
+			--yellow: #e7bd62;
+			--line: #dedfd5;
+			--white: #fffefa;
+			--font: "DM Sans", sans-serif;
+			--japanese: "Zen Maru Gothic", sans-serif;
+		}
+
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+		a { color: inherit; text-decoration: none; }
+		button { color: inherit; font: inherit; }
+		.wrap { width: min(1180px, calc(100% - 64px)); margin-inline: auto; }
+
+		.topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+		.brand { display: inline-flex; align-items: center; gap: 11px; font-size: 21px; font-weight: 700; letter-spacing: 0; }
+		.brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; background: var(--coral); color: white; font-family: var(--japanese); font-size: 21px; }
+		.nav-links { display: flex; align-items: center; gap: 33px; color: #53645c; font-size: 14px; }
+		.nav-links a:hover { color: var(--coral); }
+		.nav-actions { display: flex; align-items: center; gap: 14px; }
+		.login { font-size: 14px; font-weight: 600; }
+		.button { min-height: 46px; padding: 0 19px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 0; border-radius: 5px; background: var(--ink); color: white; font-weight: 600; font-size: 14px; transition: transform .2s, background .2s; cursor: pointer; }
+		.button:hover { transform: translateY(-2px); background: #285a4d; }
+		.button.coral { background: var(--coral); }
+		.button.coral:hover { background: #de634d; }
+		.button.light { background: var(--white); color: var(--ink); }
+		.menu-toggle { display: none; width: 42px; height: 42px; padding: 0; border: 1px solid var(--line); border-radius: 5px; background: transparent; font-size: 21px; cursor: pointer; }
+
+		.hero { min-height: 565px; position: relative; display: flex; align-items: center; overflow: hidden; border-radius: 7px; isolation: isolate; background: #273f38; color: white; }
+		.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=2000&q=85") center 48% / cover; }
+		.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(19, 47, 41, .91) 0%, rgba(19, 47, 41, .72) 42%, rgba(19, 47, 41, .12) 100%); }
+		.hero-content { width: min(620px, 70%); padding: 74px 0 78px 8%; }
+		.eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 23px; color: #f1c86e; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+		.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+		h1, h2, h3, p { margin-top: 0; }
+		h1 { max-width: 590px; margin-bottom: 20px; font-family: var(--japanese); font-size: clamp(48px, 6vw, 76px); line-height: 1.1; font-weight: 700; letter-spacing: 0; }
+		h1 span { color: #f0c86f; }
+		.hero-copy { max-width: 440px; margin-bottom: 29px; color: rgba(255,255,255,.82); font-size: 16px; line-height: 1.8; }
+		.hero-buttons { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+		.hero-note { margin: 19px 0 0; color: rgba(255,255,255,.71); font-size: 12px; }
+		.hero-note span { color: #f0c86f; }
+		.vertical-kana { position: absolute; right: 7%; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,.82); font-family: var(--japanese); font-size: 58px; line-height: 1.4; writing-mode: vertical-rl; text-shadow: 0 2px 22px rgba(0,0,0,.24); }
+
+		.proof { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 30px; padding: 31px 8%; border-bottom: 1px solid var(--line); }
+		.proof-item { display: flex; align-items: center; gap: 13px; }
+		.proof-symbol { color: var(--coral); font-family: var(--japanese); font-size: 29px; }
+		.proof-item strong { display: block; margin-bottom: 3px; font-size: 15px; }
+		.proof-item small { color: var(--muted); font-size: 12px; }
+		.proof-divider { width: 1px; height: 38px; background: var(--line); }
+
+		.section { padding: 92px 0; }
+		.section-head { max-width: 590px; margin-bottom: 38px; }
+		.kicker { margin-bottom: 12px; color: #bd5948; font-size: 12px; font-weight: 700; letter-spacing: 1.15px; text-transform: uppercase; }
+		h2 { margin-bottom: 13px; font-family: var(--japanese); font-size: clamp(31px, 4vw, 45px); line-height: 1.2; letter-spacing: 0; }
+		.section-head p:last-child { margin-bottom: 0; color: var(--muted); font-size: 15px; line-height: 1.8; }
+		.course-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+		.course { min-height: 260px; position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 25px; border: 1px solid var(--line); border-radius: 6px; background: var(--white); transition: transform .2s, border-color .2s; }
+		.course:hover { transform: translateY(-4px); border-color: #b7c7bd; }
+		.course-top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+		.course-level { padding: 6px 9px; border-radius: 3px; background: #eaf0e9; color: #416b59; font-size: 11px; font-weight: 700; }
+		.course:nth-child(2) .course-level { background: #f8eee2; color: #a76839; }
+		.course:nth-child(3) .course-level { background: #f7e9e5; color: #b95747; }
+		.course-kana { color: var(--ink); font-family: var(--japanese); font-size: 31px; }
+		.course h3 { margin-bottom: 8px; font-family: var(--japanese); font-size: 21px; }
+		.course p { max-width: 300px; margin-bottom: 19px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+		.course-link { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; color: #b65040; font-size: 13px; font-weight: 700; }
+		.course-link span { transition: transform .2s; }
+		.course-link:hover span { transform: translateX(4px); }
+
+		.practice { padding: 67px 0; background: #e9eee5; }
+		.practice-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 70px; }
+		.practice-copy { max-width: 470px; }
+		.practice-copy p:not(.kicker) { color: var(--muted); font-size: 15px; line-height: 1.8; }
+		.word-card { min-height: 255px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 32px; border-radius: 6px; background: var(--white); text-align: center; box-shadow: 0 14px 35px rgba(35,64,51,.08); }
+		.word-card::after { content: ""; position: absolute; top: 0; right: 0; width: 54px; height: 54px; background: linear-gradient(135deg, transparent 49%, #e9eee5 50%); }
+		.word-label { margin-bottom: 13px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+		.word-jp { margin-bottom: 5px; font-family: var(--japanese); font-size: 52px; line-height: 1.2; }
+		.word-romaji { margin-bottom: 9px; color: #b65040; font-size: 13px; font-weight: 600; }
+		.word-meaning { margin: 0; color: var(--muted); font-size: 14px; }
+		.word-controls { display: flex; align-items: center; gap: 16px; margin-top: 23px; }
+		.word-controls button { min-height: 37px; padding: 0 12px; border: 1px solid var(--line); border-radius: 4px; background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; }
+		.word-controls button:hover { border-color: var(--ink); }
+		.word-count { color: var(--muted); font-size: 12px; }
+
+		.routine { padding: 76px 0; background: #f0e9d9; }
+		.routine .section-head { margin-bottom: 31px; }
+		.routine-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 70px; align-items: start; }
+		.streak-area { padding-right: 48px; border-right: 1px solid #d8cfbd; }
+		.streak-heading { display: flex; align-items: center; gap: 17px; margin-bottom: 24px; }
+		.streak-flame { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 50%; background: var(--coral); color: white; font-family: var(--japanese); font-size: 27px; }
+		.streak-heading p { margin: 0 0 2px; color: var(--muted); font-size: 13px; }
+		.streak-heading strong { margin-right: 6px; font-size: 32px; }
+		.streak-heading span:last-child { color: var(--muted); font-size: 13px; }
+		.study-progress { margin: 0 0 23px; }
+		.study-progress-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 9px; font-size: 12px; }
+		.study-progress-label span:first-child { color: var(--muted); }
+		.study-progress-label strong { font-size: 13px; }
+		.study-progress-track { height: 9px; overflow: hidden; border-radius: 99px; background: rgba(25,61,53,.12); }
+		.study-progress-fill { width: 0; height: 100%; border-radius: inherit; background: var(--coral); transition: width .35s ease; }
+		.week-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+		.week-day { min-width: 0; display: grid; justify-items: center; gap: 8px; color: var(--muted); font-size: 11px; }
+		.week-day-mark { width: 100%; aspect-ratio: 1; max-width: 48px; display: grid; place-items: center; border: 1px solid #d8cfbd; border-radius: 50%; background: rgba(255,254,250,.55); color: #8a938d; font-size: 13px; }
+		.week-day.is-done .week-day-mark { border-color: var(--ink); background: var(--ink); color: white; }
+		.week-day.is-today .week-day-mark { outline: 2px solid var(--coral); outline-offset: 2px; }
+		.week-day.is-today { color: var(--ink); font-weight: 700; }
+		.routine-status { min-height: 20px; margin: 17px 0 15px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+		.reminder-area h3 { margin-bottom: 9px; font-family: var(--japanese); font-size: 22px; }
+		.reminder-area > p:not(.kicker) { margin-bottom: 17px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+		.reminder-area label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 700; }
+		.reminder-controls { display: flex; gap: 9px; align-items: center; }
+		.reminder-controls input { width: 120px; min-height: 46px; padding: 0 10px; border: 1px solid #d8cfbd; border-radius: 4px; background: var(--white); color: var(--ink); font: inherit; }
+		.reminder-controls .button { padding-inline: 14px; }
+		.reminder-status { min-height: 38px; margin: 12px 0 0 !important; font-size: 12px !important; }
+
+		.quote-section { padding: 78px 0 86px; }
+		.quote { max-width: 780px; margin: 0 auto; text-align: center; }
+		.quote-mark { margin-bottom: 12px; color: var(--coral); font-family: Georgia, serif; font-size: 48px; line-height: 1; }
+		.quote blockquote { margin: 0 auto 23px; font-family: var(--japanese); font-size: clamp(22px, 3vw, 32px); line-height: 1.55; }
+		.quote-person { display: flex; justify-content: center; align-items: center; gap: 11px; }
+		.avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #d7a184; color: white; font-family: var(--japanese); font-weight: 700; }
+		.quote-person strong { display: block; font-size: 12px; text-align: left; }
+		.quote-person small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; text-align: left; }
+
+		.cta { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 47px 7%; border-radius: 6px; background: var(--ink); color: white; }
+		.cta::after { content: "学"; position: absolute; right: 28%; top: -44px; color: rgba(255,255,255,.055); font-family: var(--japanese); font-size: 190px; pointer-events: none; }
+		.cta-copy { position: relative; z-index: 1; }
+		.cta h2 { max-width: 570px; margin-bottom: 9px; font-size: clamp(25px, 3vw, 35px); }
+		.cta p { margin: 0; color: rgba(255,255,255,.72); font-size: 14px; }
+		.cta .button { position: relative; z-index: 1; flex: 0 0 auto; }
+
+		footer { margin-top: 80px; border-top: 1px solid var(--line); }
+		.footer-inner { min-height: 90px; display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 12px; }
+		.footer-links { display: flex; gap: 22px; }
+		.footer-links a:hover { color: var(--ink); }
+
+		@media (max-width: 760px) {
+			.wrap { width: min(100% - 36px, 560px); }
+			.topbar { height: 70px; }
+			.nav-actions .login, .nav-actions > .button { display: none; }
+			.menu-toggle { display: block; }
+			.nav-links { position: absolute; top: 62px; left: 18px; right: 18px; z-index: 5; display: none; align-items: stretch; gap: 0; padding: 8px 16px; border: 1px solid var(--line); border-radius: 5px; background: var(--white); box-shadow: 0 12px 25px rgba(25,61,53,.1); }
+			.nav-links.open { display: flex; flex-direction: column; }
+			.nav-links a { padding: 13px 3px; border-bottom: 1px solid var(--line); }
+			.nav-links a:last-child { border-bottom: 0; }
+			.hero { min-height: 550px; border-radius: 5px; }
+			.hero::before { background-position: 59% center; }
+			.hero::after { background: linear-gradient(90deg, rgba(19,47,41,.92), rgba(19,47,41,.58)); }
+			.hero-content { width: 100%; padding: 62px 27px; }
+			h1 { max-width: 450px; font-size: clamp(46px, 13vw, 64px); }
+			.hero-copy { max-width: 370px; font-size: 14px; }
+			.vertical-kana { right: 6%; top: 17%; transform: none; font-size: 33px; opacity: .65; }
+			.proof { grid-template-columns: 1fr; gap: 15px; padding: 24px 8%; }
+			.proof-divider { width: 100%; height: 1px; }
+			.section { padding: 67px 0; }
+			.course-grid { grid-template-columns: 1fr; gap: 12px; }
+			.course { min-height: 225px; }
+			.practice { padding: 57px 0; }
+			.practice-inner { grid-template-columns: 1fr; gap: 28px; }
+			.word-card { min-height: 240px; }
+			.routine { padding: 59px 0; }
+			.routine-grid { grid-template-columns: 1fr; gap: 31px; }
+			.streak-area { padding: 0 0 27px; border-right: 0; border-bottom: 1px solid #d8cfbd; }
+			.week-days { gap: 5px; }
+			.reminder-controls { flex-wrap: wrap; }
+			.quote-section { padding: 62px 0 68px; }
+			.cta { align-items: flex-start; flex-direction: column; padding: 34px 25px; }
+			.cta::after { right: 5%; top: 10px; font-size: 125px; }
+			footer { margin-top: 60px; }
+			.footer-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding: 20px 0; }
+			.footer-links { flex-wrap: wrap; gap: 14px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+		}
+	</style>
+</head>
+<body>
+	<header class="wrap">
+		<nav class="topbar" aria-label="Navigasi utama">
+			<a class="brand" href="#beranda" aria-label="Nihongo, beranda"><span class="brand-mark" lang="ja">日</span><span>nihongo<span style="color:var(--coral)">.</span></span></a>
+			<div class="nav-links" id="nav-links">
+				<a href="#kelas">Kelas</a>
+				<a href="#metode">Cara belajar</a>
+				<a href="#konsistensi">Streak</a>
+				<a href="#cerita">Cerita murid</a>
+			</div>
+			<div class="nav-actions">
+				<a class="login" href="#kelas">Masuk</a>
+				<a class="button" href="#mulai">Mulai belajar <span aria-hidden="true">→</span></a>
+				<button class="menu-toggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="nav-links">☰</button>
+			</div>
+		</nav>
+	</header>
+
+	<main>
+		<section class="hero wrap" id="beranda">
+			<div class="hero-content">
+				<p class="eyebrow">Bahasa baru, dunia baru</p>
+				<h1>Pelan-pelan,<br>jadi <span>lancar.</span></h1>
+				<p class="hero-copy">Mulai mengenal bahasa Jepang dari hal-hal kecil. Belajar dengan ritme kamu, sampai suatu hari semua terasa akrab.</p>
+				<div class="hero-buttons">
+					<a class="button coral" href="#kelas">Temukan kelasmu <span aria-hidden="true">→</span></a>
+					<a class="button light" href="#metode">Coba satu kata</a>
+				</div>
+				<p class="hero-note"><span>●</span> Untuk pemula, penggemar, dan calon petualang.</p>
+			</div>
+			<div class="vertical-kana" lang="ja" aria-hidden="true">日本語を楽しもう</div>
+		</section>
+
+		<section class="proof wrap" aria-label="Keunggulan Nihongo">
+			<div class="proof-item"><span class="proof-symbol" lang="ja">あ</span><div><strong>Mulai dari dasar</strong><small>Hiragana sampai percakapan</small></div></div>
+			<div class="proof-divider" aria-hidden="true"></div>
+			<div class="proof-item"><span class="proof-symbol" lang="ja">話</span><div><strong>Belajar sambil praktik</strong><small>Contoh nyata, bukan hafalan saja</small></div></div>
+			<div class="proof-divider" aria-hidden="true"></div>
+			<div class="proof-item"><span class="proof-symbol" lang="ja">自</span><div><strong>Atur ritmemu</strong><small>Belajar kapan pun kamu siap</small></div></div>
+		</section>
+
+		<section class="section wrap" id="kelas">
+			<div class="section-head">
+				<p class="kicker">Pilih langkah pertamamu</p>
+				<h2>Belajar sesuai tujuanmu.</h2>
+				<p>Dari huruf pertama sampai lebih percaya diri ngobrol. Ada jalur belajar yang pas untuk setiap tahap.</p>
+			</div>
+			<div class="course-grid">
+				<article class="course">
+					<div class="course-top"><span class="course-level">PEMULA</span><span class="course-kana" lang="ja">はじめて</span></div>
+					<h3>Kenalan dengan Jepang</h3>
+					<p>Pelajari hiragana, katakana, salam, dan ungkapan dasar sehari-hari.</p>
+					<a class="course-link" href="#mulai">Lihat kelas <span aria-hidden="true">→</span></a>
+				</article>
+				<article class="course">
+					<div class="course-top"><span class="course-level">DASAR</span><span class="course-kana" lang="ja">ことば</span></div>
+					<h3>Mulai banyak bicara</h3>
+					<p>Susun kalimat sederhana dan latih percakapan yang sering kamu temui.</p>
+					<a class="course-link" href="#mulai">Lihat kelas <span aria-hidden="true">→</span></a>
+				</article>
+				<article class="course">
+					<div class="course-top"><span class="course-level">LANJUTAN</span><span class="course-kana" lang="ja">一歩ずつ</span></div>
+					<h3>Lebih dekat ke lancar</h3>
+					<p>Perluas kosakata dan pahami nuansa dalam obrolan sehari-hari.</p>
+					<a class="course-link" href="#mulai">Lihat kelas <span aria-hidden="true">→</span></a>
+				</article>
+			</div>
+		</section>
+
+		<section class="practice" id="metode">
+			<div class="wrap practice-inner">
+				<div class="practice-copy">
+					<p class="kicker">Satu kata hari ini</p>
+					<h2>Belajar sedikit.<br>Ingat lebih lama.</h2>
+					<p>Kosakata jadi lebih mudah menempel saat dekat dengan keseharian. Coba kartu kata ini, lalu lanjutkan ke kata berikutnya.</p>
+				</div>
+				<div class="word-card" aria-live="polite">
+					<span class="word-label">Kosakata Jepang</span>
+					<span class="word-jp" lang="ja" id="word-jp">ありがとう</span>
+					<span class="word-romaji" id="word-romaji">arigatou</span>
+					<p class="word-meaning" id="word-meaning">terima kasih</p>
+					<div class="word-controls">
+						<button type="button" id="next-word">Kata berikutnya <span aria-hidden="true">→</span></button>
+						<span class="word-count" id="word-count">01 / 04</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="routine" id="konsistensi">
+			<div class="wrap">
+				<div class="section-head">
+					<p class="kicker">Sedikit demi sedikit</p>
+					<h2>Tujuh hari, satu kebiasaan.</h2>
+					<p>Catat sesi belajarmu setiap hari dan lihat progres minggu ini. Lima menit tetap dihitung.</p>
+				</div>
+				<div class="routine-grid">
+					<div class="streak-area">
+						<div class="streak-heading"><span class="streak-flame" lang="ja" aria-hidden="true">火</span><div><p>Streak saat ini</p><strong id="streak-total">0</strong><span>hari berturut-turut</span></div></div>
+						<div class="study-progress">
+							<div class="study-progress-label"><span>Target belajar 7 hari</span><strong id="study-progress-label">0% selesai</strong></div>
+							<div class="study-progress-track" id="study-progress" role="progressbar" aria-label="Progres target belajar tujuh hari" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="study-progress-fill" id="study-progress-fill"></div></div>
+						</div>
+						<div class="week-days" id="week-days" aria-label="Progres belajar minggu ini"></div>
+						<p class="routine-status" id="streak-status" aria-live="polite">Belum ada sesi tercatat minggu ini. Mulai dengan satu sesi hari ini.</p>
+						<button class="button" type="button" id="mark-study">Catat belajar hari ini <span aria-hidden="true">✓</span></button>
+					</div>
+					<div class="reminder-area">
+						<p class="kicker">Pengingat harian</p>
+						<h3>Biar belajar tak terlewat.</h3>
+						<p>Pilih waktu pengingat. Contoh: setiap hari pukul 19.00, luangkan lima menit untuk mengulang kosakata.</p>
+						<label for="reminder-time">Waktu pengingat</label>
+						<div class="reminder-controls"><input id="reminder-time" type="time" value="19:00"><button class="button coral" type="button" id="save-reminder">Aktifkan pengingat</button></div>
+						<p class="reminder-status" id="reminder-status" aria-live="polite">Contoh pengingat: “Saatnya belajar Nihongo selama 5 menit.” Pengingat aktif saat halaman terbuka.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="quote-section wrap" id="cerita">
+			<div class="quote">
+				<div class="quote-mark" aria-hidden="true">“</div>
+				<blockquote>Awalnya cuma ingin mengerti lirik lagu. Sekarang, belajar Jepang sudah jadi bagian hidup ku untuk merubah diri.</blockquote>
+				<div class="quote-person"><span class="avatar" lang="ja">美</span><div><strong>Mei P.</strong><small>Murid kelas pemula</small></div></div>
+			</div>
+		</section>
+
+		<section class="wrap" id="mulai">
+			<div class="cta">
+				<div class="cta-copy"><h2>Satu langkah kecil. はじめよう。</h2><p>Mulai perjalanan bahasa Jepangmu hari ini.</p></div>
+				<a class="button coral" href="mailto:halo@nihongo.id?subject=Mulai%20belajar%20Nihongo">Yuk, mulai belajar <span aria-hidden="true">→</span></a>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<div class="wrap footer-inner">
+			<a class="brand" href="#beranda"><span class="brand-mark" lang="ja">日</span><span>nihongo<span style="color:var(--coral)">.</span></span></a>
+			<span>© 2026 Nihongo. Belajar dengan hati, satu kata demi satu kata.</span>
+			<div class="footer-links"><a href="#kelas">Kelas</a><a href="#metode">Kosakata</a><a href="#cerita">Cerita murid</a></div>
+		</div>
+	</footer>
+
+	<script>
+		const words = [
+			{ japanese: "ありがとう", romaji: "arigatou", meaning: "terima kasih" },
+			{ japanese: "おはよう", romaji: "ohayou", meaning: "selamat pagi" },
+			{ japanese: "だいじょうぶ", romaji: "daijoubu", meaning: "tidak apa-apa" },
+			{ japanese: "またね", romaji: "matane", meaning: "sampai jumpa" },
+            { japanese: "すみません", romaji: "sumimasen", meaning: "permisi / maaf" },
+            { japanese: "はい", romaji: "hai", meaning: "ya" },
+            { japanese: "いいえ", romaji: "iie", meaning: "tidak" },
+            { japanese: "ごめんなさい", romaji: "gomennasai", meaning: "maafkan saya" },
+            { japanese: "おやすみなさい", romaji: "oyasuminasai", meaning: "selamat tidur" },
+            { japanese: "いただきます", romaji: "itadakimasu", meaning: "selamat makan (sebelum makan)" },
+            { japanese: "ごちそうさまでした", romaji: "gochisousama deshita", meaning: "terima kasih atas makanannya (setelah makan)" },
+			{ japanese: "よろしくお願いします", romaji: "yoroshiku onegaishimasu", meaning: "senang bertemu denganmu / mohon bantuannya" },
+			{ japanese: "お元気ですか", romaji: "ogenki desu ka", meaning: "apa kabar?" },
+			{ japanese: "はい、元気です", romaji: "hai, genki desu", meaning: "ya, saya baik-baik saja" },
+			{ japanese: "いいえ、元気ではありません", romaji: "iie, genki dewa arimasen", meaning: "tidak, saya tidak baik-baik saja" },
+			{ japanese: "さようなら", romaji: "sayounara", meaning: "selamat tinggal" },
+			{ japanese: "また明日", romaji: "mata ashita", meaning: "sampai besok" },
+			{ japanese: "おめでとうございます", romaji: "omedetou gozaimasu", meaning: "selamat!" },
+            { japanese: "頑張ってください", romaji: "ganbatte kudasai", meaning: "semangat!" }
+		];
+		let wordIndex = 0;
+		const nextWordButton = document.querySelector("#next-word");
+		nextWordButton.addEventListener("click", () => {
+			wordIndex = (wordIndex + 1) % words.length;
+			document.querySelector("#word-jp").textContent = words[wordIndex].japanese;
+			document.querySelector("#word-romaji").textContent = words[wordIndex].romaji;
+			document.querySelector("#word-meaning").textContent = words[wordIndex].meaning;
+			document.querySelector("#word-count").textContent = `${String(wordIndex + 1).padStart(2, "0")} / ${String(words.length).padStart(2, "0")}`;
+		});
+
+		const studyDatesKey = "nihongo-study-dates";
+		const reminderKey = "nihongo-daily-reminder";
+		const dateKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+		const readStudyDates = () => {
+			try {
+				const savedDates = JSON.parse(localStorage.getItem(studyDatesKey) || "[]");
+				return new Set(Array.isArray(savedDates) ? savedDates.filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date)) : []);
+			} catch {
+				return new Set();
+			}
+		};
+		let studyDates = readStudyDates();
+		const streakTotal = document.querySelector("#streak-total");
+		const streakStatus = document.querySelector("#streak-status");
+		const markStudyButton = document.querySelector("#mark-study");
+		const weekDays = document.querySelector("#week-days");
+
+		const renderStudyProgress = () => {
+			const today = new Date();
+			const todayKey = dateKey(today);
+			const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+			if (!studyDates.has(todayKey)) start.setDate(start.getDate() - 1);
+			let streak = 0;
+			const cursor = new Date(start);
+			while (studyDates.has(dateKey(cursor))) {
+				streak += 1;
+				cursor.setDate(cursor.getDate() - 1);
+			}
+			streakTotal.textContent = String(streak);
+			streakStatus.textContent = studyDates.has(todayKey)
+				? (streak >= 7 ? `Keren, kamu sudah belajar ${streak} hari berturut-turut! Pertahankan ritmenya.` : `Sesi hari ini tercatat. ${7 - Math.min(streak, 7)} hari lagi menuju target 7 hari.`)
+				: (streak > 0 ? `Streak ${streak} hari. Catat sesi hari ini agar tetap berlanjut.` : "Belum ada sesi tercatat minggu ini. Mulai dengan satu sesi hari ini.");
+			markStudyButton.disabled = studyDates.has(todayKey);
+			markStudyButton.textContent = studyDates.has(todayKey) ? "Belajar hari ini sudah dicatat ✓" : "Catat belajar hari ini ✓";
+			weekDays.replaceChildren();
+			const monday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+			monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7));
+			const weekdayFormat = new Intl.DateTimeFormat("id-ID", { weekday: "short" });
+			let completedDays = 0;
+			for (let dayIndex = 0; dayIndex < 7; dayIndex += 1) {
+				const day = new Date(monday);
+				day.setDate(monday.getDate() + dayIndex);
+				const key = dateKey(day);
+				if (studyDates.has(key)) completedDays += 1;
+				const item = document.createElement("div");
+				item.className = "week-day";
+				item.classList.toggle("is-done", studyDates.has(key));
+				item.classList.toggle("is-today", key === todayKey);
+				const mark = document.createElement("span");
+				mark.className = "week-day-mark";
+				mark.textContent = studyDates.has(key) ? "✓" : String(day.getDate());
+				const label = document.createElement("span");
+				label.textContent = weekdayFormat.format(day);
+				item.append(mark, label);
+				weekDays.append(item);
+			}
+			const progressPercent = Math.round((completedDays / 7) * 100);
+			document.querySelector("#study-progress-label").textContent = `${progressPercent}% selesai`;
+			document.querySelector("#study-progress-fill").style.width = `${progressPercent}%`;
+			document.querySelector("#study-progress").setAttribute("aria-valuenow", String(progressPercent));
+		};
+
+		markStudyButton.addEventListener("click", () => {
+			studyDates.add(dateKey(new Date()));
+			localStorage.setItem(studyDatesKey, JSON.stringify([...studyDates]));
+			renderStudyProgress();
+		});
+		renderStudyProgress();
+
+		const reminderTime = document.querySelector("#reminder-time");
+		const reminderButton = document.querySelector("#save-reminder");
+		const reminderStatus = document.querySelector("#reminder-status");
+		const loadReminder = () => {
+			try {
+				return JSON.parse(localStorage.getItem(reminderKey) || "null");
+			} catch {
+				return null;
+			}
+		};
+		let reminder = loadReminder();
+		if (reminder && /^\d{2}:\d{2}$/.test(reminder.time)) reminderTime.value = reminder.time;
+		const renderReminder = () => {
+			reminderButton.textContent = reminder && reminder.enabled ? "Matikan pengingat" : "Aktifkan pengingat";
+			if (reminder && reminder.enabled) {
+				reminderStatus.textContent = `Pengingat aktif setiap hari pukul ${reminder.time}. Pengingat berjalan saat halaman terbuka.`;
+			} else {
+				reminderStatus.textContent = "Contoh pengingat: “Saatnya belajar Nihongo selama 5 menit.” Pengingat aktif saat halaman terbuka.";
+			}
+		};
+		reminderButton.addEventListener("click", async () => {
+			if (reminder && reminder.enabled) {
+				reminder = { ...reminder, enabled: false };
+				localStorage.setItem(reminderKey, JSON.stringify(reminder));
+				renderReminder();
+				return;
+			}
+			if (!reminderTime.value) {
+				reminderStatus.textContent = "Pilih waktu pengingat terlebih dahulu.";
+				return;
+			}
+			reminder = { time: reminderTime.value, enabled: true };
+			localStorage.setItem(reminderKey, JSON.stringify(reminder));
+			if ("Notification" in window && Notification.permission === "default") {
+				try {
+					await Notification.requestPermission();
+				} catch {
+					reminderStatus.textContent = "Pengingat tetap tampil saat halaman terbuka; izin notifikasi browser tidak diberikan.";
+				}
+			}
+			renderReminder();
+		});
+		const checkReminder = () => {
+			if (!reminder || !reminder.enabled) return;
+			const now = new Date();
+			const currentTime = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+			if (currentTime !== reminder.time || localStorage.getItem(`${reminderKey}-last-fired`) === dateKey(now)) return;
+			localStorage.setItem(`${reminderKey}-last-fired`, dateKey(now));
+			const message = "Saatnya belajar Nihongo selama 5 menit.";
+			if ("Notification" in window && Notification.permission === "granted") {
+				new Notification("Pengingat belajar Nihongo", { body: message });
+			}
+			reminderStatus.textContent = message;
+		};
+		renderReminder();
+		checkReminder();
+		window.setInterval(checkReminder, 30000);
+
+		const menuButton = document.querySelector(".menu-toggle");
+		const navigation = document.querySelector("#nav-links");
+		menuButton.addEventListener("click", () => {
+			const isOpen = navigation.classList.toggle("open");
+			menuButton.setAttribute("aria-expanded", String(isOpen));
+			menuButton.setAttribute("aria-label", isOpen ? "Tutup menu" : "Buka menu");
+		});
+		navigation.addEventListener("click", (event) => {
+			if (event.target.closest("a")) {
+				navigation.classList.remove("open");
+				menuButton.setAttribute("aria-expanded", "false");
+				menuButton.setAttribute("aria-label", "Buka menu");
+			}
+		});
+	</script>
+</body>
+</html>
